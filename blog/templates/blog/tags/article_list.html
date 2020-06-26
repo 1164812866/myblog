@@ -1,4 +1,6 @@
 {% load blog_tags %}
+{% load comment_tags %}
+
 <div class="summary-list">
     {% for article in articles %}
     <div class="media mb-1 mb-sm-2 p-2 p-lg-3">
@@ -18,11 +20,11 @@
             <p class="d-none d-sm-block mb-2 f-15">{{ article.summary|truncatechars:130 }}</p>
             <p class="d-block d-sm-none mb-2 f-15">{{ article.summary|truncatechars:64 }}</p>
             <div class="text-muted mb-0 f-12">
-                <a class="cate" href="#" title="查看当前分类下更多文章">
+                <a class="cate" href="{{ article.category.get_absolute_url }}" title="查看当前分类下更多文章">
                     <i class="fa fa-book mr-1"></i>{{ article.category }}</a>
                 <span><i class="fa fa-eye ml-2 mr-1"></i>{{ article.views }}</span>
-                <a href="#" target="_blank" title="查看文章评论">
-                    <i class="fa fa-comments ml-2 mr-1"></i></a>
+                <a href=" {{ article.get_absolute_url }}" title="查看文章评论">
+                    <i class="fa fa-comments ml-2 mr-1"></i>{% get_comment_count article %}</a>
             </div>
         </div>
     </div>

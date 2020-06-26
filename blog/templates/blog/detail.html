@@ -1,7 +1,8 @@
 {% extends 'blog/base.html' %}
-{% load blog_tags static %}
+{% load blog_tags  %}
 {% load humanize %}
 {% load comment_tags %}
+{% load static %}
 
 
 {% block head_title %}{{ article.title }}_{{ article.category }}{% endblock %}
@@ -17,6 +18,7 @@
 {% endif %}
 <link href="{% static 'blog/css/detail.css' %}?v=20180102.08" rel="stylesheet">
 <link href="{% static 'blog/css/github-colorful.css' %}?v=20180102.130" rel="stylesheet">
+
 {% endblock %}
 
 {% block base_content %}
@@ -29,7 +31,7 @@
                         <i class="fa fa-home mr-1"></i><a href="{% url 'blog:index' %}">首页</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="#">{{ article.category}}</a>
+                        <a href="{{ article.category.get_absolute_url }}">{{ article.category}}</a>
                     </li>
                     <li class="breadcrumb-item active d-none d-md-block" aria-current="page">{{ article.title }}</li>
                     <li class="breadcrumb-item active d-md-none" aria-current="page">当前位置</li>
@@ -54,11 +56,12 @@
                     </div>
                     <div class="tag-cloud my-4">
                         {% for tag in article.tags.all %}
-                        <a class="tags f-16" href="#">{{ tag.name }}</a>
+                        <a class="tags f-16" href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>
                         {% endfor %}
                     </div>
                     <nav class="more-page f-16">
                         <ul class="pagination justify-content-between">
+
                             <li class="page-item">
                                 {% if article.get_pre %}
                                 <a class="d-none d-md-block" href="{{ article.get_pre.get_absolute_url }}"
@@ -66,45 +69,25 @@
                                     <i class="fa fa-chevron-left mr-1"></i>
                                     {{ article.get_pre.title|truncatechars:18 }}
                                 </a>
-                                <a class="d-md-none" href="#">
+                                <a class="d-md-none" href="{{ article.get_pre.get_absolute_url }}">
                                     <i class="fa fa-chevron-left mr-1"></i>上一篇</a>
                                 {% endif %}
                             </li>
+
                             <li class="page-item">
                                 {% if article.get_next %}
-                                <a class="d-none d-md-block" href="#"
+                                <a class="d-none d-md-block" href="{{ article.get_next.get_absolute_url }}"
                                    title="下一篇：{{ article.get_next.title }}">
                                     {{ article.get_next.title|truncatechars:18 }}
                                     <i class="fa fa-chevron-right ml-1"></i>
                                 </a>
-                                <a class="d-md-none" href="#">
+                                <a class="d-md-none" href="{{ article.get_next.get_absolute_url }}">
                                     下一篇<i class="fa fa-chevron-right ml-1"></i>
                                 </a>
                                 {% endif %}
                             </li>
                         </ul>
                     </nav>
-                    <div class="text-center">
-                        <button class="btn btn-danger rounded-0" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="sponsor-zfb sponsor-wx" style="line-height: 1;font-size: .8rem;">
-                            <i class="fa fa-cny"></i>
-                            如果文章对你有所帮助，可以赞助本站
-                            <i class="fa fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="row p-3">
-                        <div class="col text-center">
-                            <div class="multi-collapse collapse show" id="sponsor-wx" style="">
-                                <div class="p-1 text-success">微信</div>
-                                <img class="w-75" src="/static/blog/img/weixin.jpg">
-                            </div>
-                        </div>
-                        <div class="col text-center">
-                            <div class="multi-collapse collapse show" id="sponsor-zfb" style="">
-                                <div class="p-1 text-primary">支付宝</div>
-                                <img class="w-75" src="/static/blog/img/zfb.jpg">
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="card mt-2 rounded-0 border-0" id="comment-block">
@@ -126,13 +109,15 @@
 {% endblock %}
 
 {% block end_file %}
+
 {% if user.is_authenticated %}
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 <script src="{% static 'comment/js/editor.js' %}?v=20180113.05907"></script>
 <script src="{% static 'comment/js/activate-power.js' %}?v=20180120"></script>
+
 <script>
 var sw=window.screen.width;if(sw>1200){POWERMODE.colorful=true;POWERMODE.shake=false;document.body.addEventListener('input',POWERMODE)};
-
 </script>
 {% endif %}
+
 {% endblock %}
