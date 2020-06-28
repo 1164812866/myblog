@@ -47,7 +47,7 @@ class DetailView(generic.DetailView):
         'markdown.extensions.codehilite',
         'markdown.extensions.toc',
         ])
-        obj.body = md.convert(obj.body)
+        obj.body = md.convert(obj.body.replace("\r\n", '  \n'))
         obj.toc = md.toc  
         return obj
 

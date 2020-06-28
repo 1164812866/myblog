@@ -16,8 +16,6 @@
 {% if user.is_authenticated %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 {% endif %}
-<link href="{% static 'blog/css/detail.css' %}?v=20180102.08" rel="stylesheet">
-<link href="{% static 'blog/css/github-colorful.css' %}?v=20180102.130" rel="stylesheet">
 
 {% endblock %}
 
@@ -96,14 +94,14 @@
                 {% include 'comment/comment_list.html' %}
             </div>
         </div>
-
+        {% if article.toc %}
         <div class="col-lg-3">
             <div class="article-toc d-none d-lg-block f-16">
                 <h4><strong>目录</strong></h4>
                 {{ article.toc|safe }}
             </div>
         </div>
-         
+        {% endif %}
     </div>
 </div>
 {% endblock %}

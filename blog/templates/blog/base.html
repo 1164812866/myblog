@@ -17,6 +17,42 @@
     <script src="http://cdn.bootcss.com/headroom/0.5.0/headroom.min.js"></script>
     <!-- blog CSS -->
     <link href="{% static 'blog/css/base.css' %}?v=20171223.05" rel="stylesheet">
+
+    <!-- 引入代码css -->
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.8/styles/github.min.css" rel="stylesheet">
+    <style>
+    .codehilite {
+      padding: 0;
+    }
+
+    /* for block of numbers */
+    .hljs-ln-numbers {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      text-align: center;
+      color: #ccc;
+      border-right: 1px solid #CCC;
+      vertical-align: top;
+      padding-right: 5px;
+    }
+
+    .hljs-ln-n {
+      width: 30px;
+    }
+
+    /* for block of code */
+    .hljs-ln .hljs-ln-code {
+      padding-left: 10px;
+      white-space: pre;
+    }
+  </style>
+
+
     {% block top-file %} {% endblock %}
 </head>
 
@@ -44,6 +80,14 @@
 <div class="text-center" id="to-top">
     <i class="fa fa-chevron-up" id="btn-top" title="回到顶部"></i>
 </div>
+
+<!--高亮-->
+<script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlightjs-line-numbers.js/2.7.0/highlightjs-line-numbers.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+</script>
  
 {% block end_file %}
 {% endblock %}

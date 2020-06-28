@@ -26,5 +26,6 @@ urlpatterns = [
     path('accounts/', include('users.urls')),
     path('comment/', include('comment.urls', namespace='comment')),#comment
     path('feed/', AllArticleRssFeed(), name='rss'),#rss订阅
+    path('mdeditor/', include('mdeditor.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)#加入这个才能显示media文件

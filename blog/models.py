@@ -4,8 +4,8 @@ from django.shortcuts import reverse
 import markdown
 import emoji
 
-from ckeditor.fields import RichTextField# django-ckeditor
-
+#from ckeditor.fields import RichTextField# django-ckeditor
+from  mdeditor.fields import MDTextField
 
 # Create your models here.
 
@@ -52,8 +52,9 @@ class Article(models.Model):
     IMG_LINK = '/static/blog/img/summary.png'
     title = models.CharField(max_length=150, verbose_name='文章标题')
     summary = models.TextField('文章摘要', max_length=230, default='文章摘要等同于网页description内容，请务必填写...')
-    body = RichTextField(verbose_name='文章内容',config_name='my_config')
+    #body = RichTextField(verbose_name='文章内容',config_name='my_config')
     #body = models.TextField(verbose_name='文章内容')
+    body = MDTextField()  #修改这个类型
 
     img_link = models.CharField('图片地址', default=IMG_LINK, max_length=255)
     create_date = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
