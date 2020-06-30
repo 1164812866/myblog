@@ -5,6 +5,7 @@
 {% load static %}
 
 
+
 {% block head_title %}{{ article.title }}_{{ article.category }}{% endblock %}
 {% block metas %}
     <meta name="description" content="1164812866">
@@ -16,6 +17,19 @@
 {% if user.is_authenticated %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 {% endif %}
+
+<!-- 粘性侧边栏样式 -->
+<style>
+    .sidebar{
+        will-change: min-height;
+    }
+
+    .sidebar__inner{
+        transform: translate(0, 0);
+        transform: translate3d(0, 0, 0);
+        will-change: position, transform;
+    }
+</style>
 
 {% endblock %}
 
@@ -96,9 +110,11 @@
         </div>
         {% if article.toc %}
         <div class="col-lg-3">
-            <div class="article-toc d-none d-lg-block f-16">
-                <h4><strong>目录</strong></h4>
-                {{ article.toc|safe }}
+            <div id="sidebar" class="article-toc d-none d-lg-block f-16 sidebar">
+                <div class="sidebar__inner">
+                    <h4><strong>目录</strong></h4>
+                    {{ article.toc|safe }}
+                 </div>
             </div>
         </div>
         {% endif %}
@@ -117,5 +133,14 @@
 var sw=window.screen.width;if(sw>1200){POWERMODE.colorful=true;POWERMODE.shake=false;document.body.addEventListener('input',POWERMODE)};
 </script>
 {% endif %}
+
+<!-- 引入粘性侧边栏 -->
+<script src="{% static 'sticky_sidebar/jquery.sticky-sidebar.min.js' %}"></script>
+<script type="text/javascript">
+    $('#sidebar').stickySidebar({
+        topSpacing: 20,
+        bottomSpacing: 20,
+    });
+</script>
 
 {% endblock %}
